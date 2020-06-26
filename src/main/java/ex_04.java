@@ -13,7 +13,7 @@ public class ex_04 {
 
     public static void main(String[] args) {
 
-        // Number of financial transactions/year
+        // Product with highest number of transactions
 
         Logger.getLogger("log").setLevel(Level.INFO);
         SparkConf conf = new SparkConf().setAppName("Hello").setMaster("local[*]");
@@ -22,7 +22,7 @@ public class ex_04 {
         JavaRDD<String> transactionInputFile = sc.textFile("in/transacoes.csv");
 
         JavaPairRDD<String, Integer> countriesCount = transactionInputFile
-                .mapToPair(getCountry())
+                .mapToPair(getProduct())
                 .reduceByKey((x, y) -> x + y);
 
         List<Tuple2<String, Integer>> results = countriesCount.collect();
@@ -41,7 +41,7 @@ public class ex_04 {
 
     }
 
-    public static PairFunction<String, String, Integer> getCountry() {
+    public static PairFunction<String, String, Integer> getProduct() {
         PairFunction<String, String, Integer> result;
         result = transaction -> new Tuple2<>(transaction.split(";")[3], 1);
         return result;

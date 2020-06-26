@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ex_03 {
+public class ex_05 {
 
     public static void main(String[] args) {
 
-        // Number of financial transactions/year
+        // Product with highest number of transactions in 2016
 
         Logger.getLogger("log").setLevel(Level.INFO);
         SparkConf conf = new SparkConf().setAppName("Hello").setMaster("local[*]");
@@ -22,20 +22,29 @@ public class ex_03 {
         JavaRDD<String> transactionInputFile = sc.textFile("in/transacoes.csv");
 
         JavaPairRDD<String, Integer> countriesCount = transactionInputFile
-                .mapToPair(getTransactions())
+                .filter(line -> line.contains("2016"))
+                .mapToPair(getProduct())
                 .reduceByKey((x, y) -> x + y);
 
         List<Tuple2<String, Integer>> results = countriesCount.collect();
 
 
+        Integer transactions = 0;
+        String product = null;
+
         for (Tuple2<String, Integer> tuple : results) {
-            System.out.println("Year: " + tuple._1() + " qty: " + tuple._2());
+            if (tuple._2() > transactions) {
+                product = tuple._1();
+                transactions = tuple._2();
+            }
         }
+        System.out.println("Product with the largest number (" + transactions + ") of transactions in 2016 is: " + product);
+
     }
 
-    public static PairFunction<String, String, Integer> getTransactions() {
+    public static PairFunction<String, String, Integer> getProduct() {
         PairFunction<String, String, Integer> result;
-        result = transaction -> new Tuple2<>(transaction.split(";")[1], 1);
+        result = transaction -> new Tuple2<>(transaction.split(";")[3], 1);
         return result;
 
     }

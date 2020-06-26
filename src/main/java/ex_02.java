@@ -23,7 +23,7 @@ public class ex_02 {
 
         JavaPairRDD<String, Integer> countriesCount = transactionInputFile
                 .filter(line -> line.contains("Brazil"))
-                .mapToPair(getCountry())
+                .mapToPair(getProduct())
                 .reduceByKey((x, y) -> x + y);
 
         List<Tuple2<String, Integer>> results = countriesCount.collect();
@@ -41,7 +41,7 @@ public class ex_02 {
 
     }
 
-    public static PairFunction<String, String, Integer> getCountry() {
+    public static PairFunction<String, String, Integer> getProduct() {
         PairFunction<String, String, Integer> result;
         result = transaction -> new Tuple2<>(transaction.split(";")[3], 1);
         return result;
