@@ -1,1 +1,1 @@
-Exercises for learning Apache Spark, MapReduce and remembering some functional programming concepts
+Apache Spark + MapReduce + Functional programming concepts
