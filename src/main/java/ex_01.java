@@ -4,6 +4,7 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.PairFunction;
 import scala.Tuple2;
+
 import java.util.List;
 import java.util.logging.*;
 
@@ -19,15 +20,22 @@ public class ex_01 {
 
         JavaRDD<String> transactionInputFile = sc.textFile("in/transacoes.csv");
 
-        JavaPairRDD<String, Integer> countriesount = transactionInputFile
+        JavaPairRDD<String, Integer> countriesCount = transactionInputFile
                 .mapToPair(getCountry())
                 .reduceByKey((x, y) -> x + y);
 
-        List<Tuple2<String, Integer>> results = countriesount.collect();
+        List<Tuple2<String, Integer>> results = countriesCount.collect();
+
+        Integer transactions = 0;
+        String country = null;
 
         for (Tuple2<String, Integer> tuple : results) {
-            System.out.println(tuple._1() + ":" + tuple._2());
+            if (tuple._2() > transactions) {
+                country = tuple._1();
+                transactions = tuple._2();
+            }
         }
+        System.out.println("Country with the largest number (" + transactions + ") of transactions is " + country);
 
     }
 
