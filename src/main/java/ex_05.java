@@ -38,7 +38,7 @@ public class ex_05 {
                 transactions = tuple._2();
             }
         }
-        System.out.println("Product with the largest number (" + transactions + ") of transactions in 2016 is: " + product);
+        System.out.println("Product with the highest number (" + transactions + ") of transactions in 2016 is: " + product);
 
     }
 

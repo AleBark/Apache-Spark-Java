@@ -37,7 +37,7 @@ public class ex_02 {
                 transactions = tuple._2();
             }
         }
-        System.out.println("Product with the largest number (" + transactions + ") of transactions in Brazil is: " + product);
+        System.out.println("Product with the highest number (" + transactions + ") of transactions in Brazil is: " + product);
 
     }
 
