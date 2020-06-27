@@ -30,13 +30,7 @@ public class ex_08 {
                     return new Tuple2<Integer, Tuple2<String, Long>>(line._1._1,
                             new Tuple2<String, Long>
                                     (line._1._2, line._2));
-                }).reduceByKey((x, y) -> {
-                    if (x._2() > y._2()) {
-                        return x;
-                    } else {
-                        return y;
-                    }
-                });
+                }).reduceByKey((x, y) -> x._2() > y._2() ? x : y);
 
         System.out.println(transactionInputFile2.collect());
     }
