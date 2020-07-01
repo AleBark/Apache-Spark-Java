@@ -26,11 +26,10 @@ public class ex_11 {
                             new Tuple2<Long, Tuple2<String, Integer>>(Long.parseLong(linha.split(";")[6]),
                                     new Tuple2<String, Integer>(linha.split(";")[4], 1)));
                 }).reduceByKey((x, y) -> {
-//                  Exempĺo do RDD até aqui:
-//                  (<<Ano,Mercadoria>) --> <Peso, <Fluxo, Ocorrencia> = <2020,Feijao> <20,<Importacao, 1>>>
+//                  Exemplo do RDD até aqui:
+//                  (<Ano,Mercadoria>) --> <Peso, <Fluxo, Ocorrencia>
 //                  x = <20, <Importacao, 1>> , y = <30, <Exportacao , 1>>
 
-//                  ((1990,Rivets, iron or steel),(115830,(ImportExport,2))), ((2006,Mixed alkylbenzenes, nes),(8635053,(ImportExport,2)))
                     return new Tuple2<Long, Tuple2<String, Integer>>(
 //                            Long => Somatória dos pesos
                               (x._1 + y._1 ),
@@ -38,6 +37,7 @@ public class ex_11 {
                                new Tuple2<String, Integer>(x._2._1 + y._2._1, x._2._2 + y._2._2));
                 });
 
+//      Output atual: ((1990,Rivets, iron or steel),(115830,(ImportExport,2))), ((2006,Mixed alkylbenzenes, nes),(8635053,(ImportExport,2)))
         System.out.println(transactionInputFile.collect());
 
     }
