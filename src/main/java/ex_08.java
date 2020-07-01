@@ -24,7 +24,6 @@ public class ex_08 {
                 }).reduceByKey((x, y) -> x + y);
 
 
-
         JavaPairRDD<Integer, Tuple2<String, Long>> transactionInputFile2 = transactionInputFile
                 .mapToPair(line -> {
                     return new Tuple2<Integer, Tuple2<String, Long>>(line._1._1,
